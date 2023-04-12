@@ -1,1 +1,5 @@
-# state_manager
+# state_manager 状态机
+
+开发记录：
+————2023年4月12日
+1、第一个版本，ROS封装
