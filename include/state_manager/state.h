@@ -5,7 +5,7 @@
 #include <functional>
 #include <string>
 
-namespace HsmState
+namespace HSMState
 {
 	class Context;
 
@@ -22,15 +22,15 @@ namespace HsmState
 		virtual void stop() {}
 
 		// 设置事件响应回调函数
-		void set_event_func(std::function<EventDeal(EventData &)> func);
+		void setEventFunc(std::function<EventDeal(EventData &)> func);
 
-		EventDeal RunEventFunc(EventData &event_data);
+		EventDeal runEventFunc(EventData &event_data);
 
-		void SetContext(Context *context);
+		void setContext(Context *context);
 
 		// 切换状态
 		// [in] name 状态名称
-		void TransState(std::string name);
+		void transState(std::string name);
 
 	private:
 		std::function<EventDeal(EventData &)> event_func_;

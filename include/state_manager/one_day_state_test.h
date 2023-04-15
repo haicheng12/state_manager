@@ -6,12 +6,14 @@
 #include "event.h"
 #include <iostream>
 
-using namespace HsmState;
-bool run = true;
+#include "state_manager/logger.h"
+
+using namespace Sakura::Logger;
+using namespace HSMState;
 
 enum EventS
 {
-	belazy = 0, // 偷懒事件
+	is_lazy = 0, // 偷懒事件
 };
 
 // 开始状态
@@ -20,12 +22,12 @@ class StartState : public State
 public:
 	void start()
 	{
-		std::cout << "开始状态 开始" << std::endl;
+		info("开始状态 开始");
 	}
 
 	void stop()
 	{
-		std::cout << "开始状态 停止" << std::endl;
+		info("开始状态 停止");
 	}
 
 	void update()
@@ -33,7 +35,7 @@ public:
 		time++;
 		if (time == 10)
 		{
-			TransState("HungerState");
+			transState("HungerState");
 		}
 	}
 
@@ -46,12 +48,12 @@ class HungerState : public State
 public:
 	void start()
 	{
-		std::cout << "饥饿状态 开始" << std::endl;
+		info("饥饿状态 开始");
 	}
 
 	void stop()
 	{
-		std::cout << "饥饿状态 停止" << std::endl;
+		info("饥饿状态 停止");
 	}
 
 	void update()
@@ -59,7 +61,7 @@ public:
 		time++;
 		if (time == 10)
 		{
-			TransState("Dinner");
+			transState("Dinner");
 		}
 	}
 
@@ -72,17 +74,17 @@ class Dinner : public State
 public:
 	void start()
 	{
-		std::cout << "晚饭状态 开始" << std::endl;
+		info("晚饭状态 开始");
 	}
 
 	void stop()
 	{
-		std::cout << "晚饭状态 停止" << std::endl;
+		info("晚饭状态 停止")
 	}
 
 	void update()
 	{
-		TransState("DoTheCookingState");
+		transState("DoTheCookingState");
 	}
 };
 
@@ -92,12 +94,12 @@ class DoTheCookingState : public State
 public:
 	void start()
 	{
-		std::cout << "做饭状态 开始" << std::endl;
+		info("做饭状态 开始");
 	}
 
 	void stop()
 	{
-		std::cout << "做饭状态 停止" << std::endl;
+		info("做饭状态 停止");
 	}
 
 	void update()
@@ -105,7 +107,7 @@ public:
 		time++;
 		if (time == 60)
 		{
-			TransState("EatState");
+			transState("EatState");
 		}
 	}
 
@@ -118,12 +120,12 @@ class EatState : public State
 public:
 	void start()
 	{
-		std::cout << "吃饭状态 开始" << std::endl;
+		info("吃饭状态 开始");
 	}
 
 	void stop()
 	{
-		std::cout << "吃饭状态 停止" << std::endl;
+		info("吃饭状态 停止");
 	}
 
 	void update()
@@ -131,7 +133,7 @@ public:
 		time++;
 		if (time == 5)
 		{
-			TransState("SleepState");
+			transState("SleepState");
 		}
 	}
 
@@ -144,12 +146,12 @@ class SleepState : public State
 public:
 	void start()
 	{
-		std::cout << "睡觉状态 开始" << std::endl;
+		info("睡觉状态 开始");
 	}
 
 	void stop()
 	{
-		std::cout << "睡觉状态 停止" << std::endl;
+		info("睡觉状态 停止");
 	}
 
 	void update()
@@ -157,7 +159,7 @@ public:
 		time++;
 		if (time == 30)
 		{
-			TransState("WorkState");
+			transState("WorkState");
 		}
 	}
 
@@ -170,24 +172,24 @@ class WorkState : public State
 public:
 	void start()
 	{
-		std::cout << "工作状态 开始" << std::endl;
+		info("工作状态 开始");
 
 		std::function<EventDeal(EventData &)> func = std::bind(&WorkState::DealEvent, this, std::placeholders::_1);
 		;
-		set_event_func(func);
+		setEventFunc(func);
 	}
 
 	void stop()
 	{
-		std::cout << "工作状态 停止" << std::endl;
+		info("工作状态 停止");
 	}
 
 	EventDeal DealEvent(EventData &event_data)
 	{
 		switch ((EventS)event_data.event_type_)
 		{
-		case belazy:
-			TransState("LoafOnAJob");
+		case is_lazy:
+			transState("LoafOnAJob");
 			break;
 		default:
 			break;
@@ -200,7 +202,8 @@ public:
 		time++;
 		if (time == 180)
 		{
-			run = false;
+			// run = false;
+			return;
 		}
 	}
 
@@ -214,12 +217,12 @@ public:
 	void start()
 	{
 		time = 0;
-		std::cout << "工作摸鱼状态 开始" << std::endl;
+		info("工作摸鱼状态 开始");
 	}
 
 	void stop()
 	{
-		std::cout << "工作摸鱼状态 停止" << std::endl;
+		info("工作摸鱼状态 停止");
 	}
 
 	void update()
@@ -227,7 +230,7 @@ public:
 		time++;
 		if (time == 10)
 		{
-			TransState("WorkState");
+			transState("WorkState");
 		}
 	}
 

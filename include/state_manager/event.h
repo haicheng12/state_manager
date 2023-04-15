@@ -1,7 +1,7 @@
 #ifndef _EVENT_H_
 #define _EVENT_H_
 
-namespace HsmState
+namespace HSMState
 {
 	enum EventDeal
 	{
@@ -20,13 +20,13 @@ namespace HsmState
 		}
 
 		template <class T>
-		void SetData(T *t)
+		void setData(T *t)
 		{
 			data_ = t;
 		}
 
 		template <class T>
-		T *GetData()
+		T *getData()
 		{
 			return (T *)data_;
 		}

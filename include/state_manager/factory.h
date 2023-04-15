@@ -4,12 +4,12 @@
 #include "state.h"
 #include "context.h"
 
-using namespace HsmState;
+using namespace HSMState;
 // 对象工厂
 class Factory
 {
 public:
-	static State *CreateState(Context *context, std::string name, std::string parent_name = "")
+	static State *createState(Context *context, std::string name, std::string parent_name = "")
 	{
 		State *state = nullptr;
 		if (name == "StartState") // 开始状态
@@ -45,7 +45,7 @@ public:
 			state = new LoafOnAJob();
 		}
 
-		context->CreateState(state, name, parent_name);
+		context->createState(state, name, parent_name);
 		return state;
 	}
 };

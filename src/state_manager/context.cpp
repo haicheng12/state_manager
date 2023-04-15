@@ -1,7 +1,7 @@
 #include "state_manager/context.h"
 #include "state_manager/state.h"
 
-namespace HsmState
+namespace HSMState
 {
 	Context::Context()
 	{
@@ -26,7 +26,7 @@ namespace HsmState
 	}
 
 	// 开始状态机
-	bool Context::Start(std::string name)
+	bool Context::start(std::string name)
 	{
 		std::unordered_map<std::string, NodeState>::iterator iter_map = states_.find(name);
 		if (iter_map != states_.end())
@@ -43,18 +43,18 @@ namespace HsmState
 	// [in] name  状态名称，为空名称为typedname的值
 	// [in] father_name 父状态的名称
 	// [out] 返回state
-	State *Context::CreateState(State *state, std::string name, std::string father_name)
+	State *Context::createState(State *state, std::string name, std::string father_name)
 	{
 		NodeState node_state;
 		node_state.state_ = state;
-		node_state.state_->SetContext(this);
+		node_state.state_->setContext(this);
 		node_state.father_name_ = father_name;
 		states_[name] = node_state;
 		return state;
 	}
 
 	// 更新当前状态
-	void Context::Update()
+	void Context::update()
 	{
 		cur_node_state_.state_->update();
 	}
@@ -62,37 +62,37 @@ namespace HsmState
 	// 同步事件
 	// 发送一个事件，提供给root状态和当前状态处理
 	// 如果当前状态是子状态，则还会给父状态处理
-	void Context::SendEvent(EventData event_data)
+	void Context::sendEvent(EventData event_data)
 	{
-		RecursiveSend(cur_node_state_, event_data);
+		recursiveSend(cur_node_state_, event_data);
 	}
 
 	// 异步事件
-	void Context::SendAsyncEvent(EventData event_data)
+	void Context::sendAsyncEvent(EventData event_data)
 	{
 		// todo 待实现
 	}
 
-	std::string Context::GetCurStateName()
+	std::string Context::getCurStateName()
 	{
 		return cur_name_;
 	}
 
 	// 递归send
-	void Context::RecursiveSend(NodeState &node_state, EventData &event_data)
+	void Context::recursiveSend(NodeState &node_state, EventData &event_data)
 	{
-		EventDeal event_deal = node_state.state_->RunEventFunc(event_data);
+		EventDeal event_deal = node_state.state_->runEventFunc(event_data);
 		if (event_deal == keep_on && !node_state.father_name_.empty())
 		{
 			std::unordered_map<std::string, NodeState>::iterator iter_map = states_.find(node_state.father_name_);
 			if (iter_map != states_.end())
 			{
-				RecursiveSend(iter_map->second, event_data);
+				recursiveSend(iter_map->second, event_data);
 			}
 		}
 	}
 
-	void Context::TransForState(std::string name)
+	void Context::transForState(std::string name)
 	{
 		std::string str_name = std::string(name);
 		std::unordered_map<std::string, NodeState>::iterator iter_map = states_.find(str_name);

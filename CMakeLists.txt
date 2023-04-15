@@ -219,8 +219,9 @@ include_directories("/usr/include/eigen3")
 # catkin_add_nosetests(test)
 
 add_executable(main src/state_manager/main.cpp 
-                    src/state_manager/context.cpp
-		    src/state_manager/state.cpp)
+                                              src/state_manager/context.cpp
+		                                          src/state_manager/state.cpp
+                                              src/state_manager/logger.cpp)
 target_link_libraries(main ${catkin_LIBRARIES})
 add_dependencies(main state_manager_gencpp)
 
