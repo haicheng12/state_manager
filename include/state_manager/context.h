@@ -1,7 +1,7 @@
 #ifndef _CONTEXT_H_
 #define _CONTEXT_H_
 
-#include "Event.h"
+#include "event.h"
 #include <string>
 #include <unordered_map>
 #include <thread>

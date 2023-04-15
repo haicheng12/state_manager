@@ -1,9 +1,9 @@
 #ifndef _ONE_DAY_STATE_TEST_H_
 #define _ONE_DAY_STATE_TEST_H_
 
-#include "Context.h"
-#include "State.h"
-#include "Event.h"
+#include "context.h"
+#include "state.h"
+#include "event.h"
 #include <iostream>
 
 using namespace HsmState;

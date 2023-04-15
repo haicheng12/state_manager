@@ -1,7 +1,7 @@
 #ifndef _STATE_H_
 #define _STATE_H_
 
-#include "Event.h"
+#include "event.h"
 #include <functional>
 #include <string>
 

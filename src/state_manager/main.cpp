@@ -1,7 +1,7 @@
-#include "state_manager/Context.h"
-#include "state_manager/State.h"
-#include "state_manager/OneDayStateTest.h"
-#include "state_manager/Factory.h"
+#include "state_manager/context.h"
+#include "state_manager/state.h"
+#include "state_manager/one_day_state_test.h"
+#include "state_manager/factory.h"
 #include <thread>
 #include <chrono>
 #include <iostream>

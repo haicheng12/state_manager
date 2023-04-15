@@ -1,8 +1,8 @@
 #ifndef _FACTORY_H_
 #define _FACTORY_H_
 
-#include "State.h"
-#include "Context.h"
+#include "state.h"
+#include "context.h"
 
 using namespace HsmState;
 // 对象工厂

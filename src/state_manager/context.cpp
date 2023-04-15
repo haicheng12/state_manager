@@ -1,5 +1,5 @@
-#include "state_manager/Context.h"
-#include "state_manager/State.h"
+#include "state_manager/context.h"
+#include "state_manager/state.h"
 
 namespace HsmState
 {
