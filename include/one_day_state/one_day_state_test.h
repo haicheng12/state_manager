@@ -81,6 +81,7 @@ public:
 		if (time == 10)
 		{
 			transState("WorkState");
+			time = 0;
 		}
 	}
 
@@ -106,8 +107,9 @@ public:
 		time++;
 		if (time == 100)
 		{
-			// transState("WorkState");
-			state_run_ = false;
+			transState("WorkState");
+			time = 0;
+			// state_run_ = false;
 		}
 	}
 

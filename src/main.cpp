@@ -48,10 +48,10 @@ int main(int argc, char **argv)
 
 	while (ros::ok())
 	{
-		time++;
-
 		if (state_run_)
 		{
+			time++;
+
 			context->update();
 
 			// 如果为工作状态，每隔一段时间发出偷懒事件
@@ -59,6 +59,10 @@ int main(int argc, char **argv)
 			{
 				EventData e = EventData((int)EventS::is_lazy);
 				context->sendEvent(e);
+			}
+			if (context->getCurStateName() == "SleepState")
+			{
+				time = 0;
 			}
 		}
 
