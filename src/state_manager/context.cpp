@@ -3,11 +3,11 @@
 
 namespace HSMState
 {
-	Context::Context()
+	Context::Context() // 连接前后
 	{
 	}
 
-	Context::~Context()
+	Context::~Context() // 连接前后
 	{
 		if (cur_node_state_.state_ != nullptr)
 		{

@@ -6,7 +6,7 @@
 #include "event.h"
 #include <iostream>
 
-#include "state_manager/logger.h"
+#include "logger/logger.h"
 
 using namespace Sakura::Logger;
 using namespace HSMState;
@@ -22,12 +22,12 @@ class StartState : public State
 public:
 	void start()
 	{
-		info("开始状态 开始");
+		info("状态机系统 开始");
 	}
 
 	void stop()
 	{
-		info("开始状态 停止");
+		info("状态机系统 停止");
 	}
 
 	void update()
