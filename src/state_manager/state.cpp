@@ -12,7 +12,7 @@ namespace HSMState
 	EventDeal State::runEventFunc(EventData &event_data)
 	{
 		if (event_func_ == nullptr)
-			return keep_on;
+			return EventDeal::CONTINUE;
 		return event_func_(event_data);
 	}
 

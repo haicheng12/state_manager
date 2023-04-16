@@ -1,12 +1,12 @@
 #ifndef _EVENT_H_
 #define _EVENT_H_
 
-namespace HSMState
+namespace HSMState // HSM状态机
 {
-	enum EventDeal
+	enum EventDeal // 事件处理
 	{
-		tail = 0, // 事件结束处理
-		keep_on	  // 事件继续传递
+		END = 0, // 事件结束处理
+		CONTINUE // 事件继续传递
 	};
 
 	// 事件数据

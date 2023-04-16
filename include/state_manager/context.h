@@ -17,8 +17,8 @@ namespace HSMState
 			father_name_ = n.father_name_;
 			return *this;
 		}
-		State *state_;
-		std::string father_name_;
+		State *state_;			  // 状态
+		std::string father_name_; // 父名字
 	};
 
 	class Context
@@ -62,7 +62,7 @@ namespace HSMState
 
 		std::unordered_map<std::string, NodeState> states_; // 状态列表
 		NodeState cur_node_state_;							// 当前状态名
-		std::string cur_name_;
+		std::string cur_name_;								// 当前名字
 
 		std::string root_name_; // 根状态名
 	};

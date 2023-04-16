@@ -6,6 +6,12 @@
 #include <time.h>
 #include <mutex>
 
+#include <stdio.h>
+#include <sys/time.h>
+#include <iomanip>
+#include <ctime>
+#include <chrono>
+
 using namespace Sakura::Logger;
 
 Logger *Logger::m_instance = nullptr;
@@ -72,16 +78,26 @@ void Logger::log(Level level, const char *fileName, int line, const char *format
    {
       throw std::logic_error("open file failed " + m_fileName);
    }
-   // 获取当前时间戳
-   auto timeTicks = time(nullptr);
-   // 将当前时间戳转化为时间结构体
-   auto ptns = localtime(&timeTicks);
-   // 存储格式化后的时间
-   char timeArray[32];
-   // 初始化字符数组
-   memset(timeArray, 0, sizeof(timeArray));
-   // 格式化时间结构体
-   strftime(timeArray, sizeof(timeArray), "[%Y-%m-%d %H:%M:%S]", ptns);
+   // // 获取当前时间戳
+   // auto timeTicks = time(nullptr);
+   // // 将当前时间戳转化为时间结构体
+   // auto ptns = localtime(&timeTicks);
+   // // 存储格式化后的时间
+   // char timeArray[32];
+   // // 初始化字符数组
+   // memset(timeArray, 0, sizeof(timeArray));
+   // // 格式化时间结构体
+   // strftime(timeArray, sizeof(timeArray), "[%Y-%m-%d %H:%M:%S]", ptns);
+
+   auto now = std::chrono::system_clock::now();
+   // 通过不同精度获取相差的毫秒数
+   uint64_t dis_millseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count() - std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count() * 1000;
+   time_t tt = std::chrono::system_clock::to_time_t(now);
+   auto time_tm = localtime(&tt);
+   char timeArray[25] = {0};
+   sprintf(timeArray, "%d-%02d-%02d %02d:%02d:%02d %03d", time_tm->tm_year + 1900,
+           time_tm->tm_mon + 1, time_tm->tm_mday, time_tm->tm_hour,
+           time_tm->tm_min, time_tm->tm_sec, (int)dis_millseconds);
 
    // 日志格式化的结果(日期 日志级别 日志打印位置:日志打印的行号位置)
    const char *fmt = "%s %s %s:%d ";
@@ -132,15 +148,26 @@ void Logger::rotate()
 {
    close();
    // 获取当前时间戳
-   auto timeTicks = time(nullptr);
-   // 将当前时间戳转化为时间结构体
-   auto ptns = localtime(&timeTicks);
-   // 存储格式化后的时间
-   char timeArray[32];
-   // 初始化字符数组
-   memset(timeArray, 0, sizeof(timeArray));
-   // 格式化时间结构体
-   strftime(timeArray, sizeof(timeArray), ".%Y-%m-%d_%H-%M-%S", ptns);
+   // auto timeTicks = time(nullptr);
+   // // 将当前时间戳转化为时间结构体
+   // auto ptns = localtime(&timeTicks);
+   // // 存储格式化后的时间
+   // char timeArray[32];
+   // // 初始化字符数组
+   // memset(timeArray, 0, sizeof(timeArray));
+   // // 格式化时间结构体
+   // strftime(timeArray, sizeof(timeArray), ".%Y-%m-%d_%H-%M-%S", ptns);
+
+   auto now = std::chrono::system_clock::now();
+   // 通过不同精度获取相差的毫秒数
+   uint64_t dis_millseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count() - std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count() * 1000;
+   time_t tt = std::chrono::system_clock::to_time_t(now);
+   auto time_tm = localtime(&tt);
+   char timeArray[25] = {0};
+   sprintf(timeArray, "%d-%02d-%02d %02d:%02d:%02d %03d", time_tm->tm_year + 1900,
+           time_tm->tm_mon + 1, time_tm->tm_mday, time_tm->tm_hour,
+           time_tm->tm_min, time_tm->tm_sec, (int)dis_millseconds);
+
    std::string fileName = m_fileName + timeArray;
    if (rename(m_fileName.c_str(), fileName.c_str()) != 0)
    {

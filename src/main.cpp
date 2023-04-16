@@ -1,6 +1,6 @@
 #include "state_manager/context.h"
 #include "state_manager/state.h"
-#include "state_manager/one_day_state_test.h"
+#include "one_day_state/one_day_state_test.h"
 #include "state_manager/factory.h"
 #include <thread>
 #include <chrono>
@@ -9,15 +9,15 @@
 
 #include <ros/ros.h> //ros头文件
 
-#include "logger/logger.h"
+#include "logger/logger.h" //日志头文件
 
 using namespace Sakura::Logger;
 
 int main(int argc, char **argv)
 {
 	// std::cout<<"hello Sakura"<<std::endl;
-	Logger::getInstance()->open("/home/ubuntu/log/test.log");
-	Logger::getInstance()->setMax(1024);
+	Logger::getInstance()->open("/home/ubuntu/log/state_manager.log");
+	Logger::getInstance()->setMax(1024000); // log最大存储空间 1M
 	// Logger::getInstance()->setLevel(Logger::INFO);
 	// Logger::getInstance()->log(Logger::DEBUG,__FILE__,__LINE__,"hello Sakura");
 	// Logger::getInstance()->log(Logger::DEBUG,__FILE__,__LINE__,"name is %s,age is %d","旋涡鸣人",18);
@@ -35,32 +35,31 @@ int main(int argc, char **argv)
 	Context *context = new Context();
 
 	// 创建状态机
-	Factory::createState(context, "StartState");
-	Factory::createState(context, "HungerState");
-	Factory::createState(context, "Dinner");
-	Factory::createState(context, "DoTheCookingState", "Dinner");
-	Factory::createState(context, "EatState", "Dinner");
-	Factory::createState(context, "SleepState");
 	Factory::createState(context, "WorkState");
 	Factory::createState(context, "LoafOnAJob");
+	Factory::createState(context, "SleepState");
 
 	// 开始状态机
-	context->start("StartState");
+	context->start("WorkState");
 
 	int time = 0;
 
 	ros::Rate loop_rate(10);
+
 	while (ros::ok())
 	{
 		time++;
 
-		context->update();
-
-		// 如果为工作状态，每隔60分钟发出偷懒事件
-		if (context->getCurStateName() == "WorkState" && time % 60 == 0)
+		if (state_run_)
 		{
-			EventData e = EventData((int)is_lazy);
-			context->sendEvent(e);
+			context->update();
+
+			// 如果为工作状态，每隔一段时间发出偷懒事件
+			if (context->getCurStateName() == "WorkState" && time == 50)
+			{
+				EventData e = EventData((int)EventS::is_lazy);
+				context->sendEvent(e);
+			}
 		}
 
 		ros::spinOnce();
@@ -73,7 +72,7 @@ int main(int argc, char **argv)
 		context = nullptr;
 	}
 
-	info("状态 关闭");
+	info("程序关闭");
 
 	return 0;
 }

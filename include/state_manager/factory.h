@@ -12,31 +12,8 @@ public:
 	static State *createState(Context *context, std::string name, std::string parent_name = "")
 	{
 		State *state = nullptr;
-		if (name == "StartState") // 开始状态
-		{
-			state = new StartState();
-		}
-		else if (name == "HungerState") // 饥饿状态
-		{
-			state = new HungerState();
-		}
-		else if (name == "Dinner") // 晚饭状态
-		{
-			state = new Dinner();
-		}
-		else if (name == "DoTheCookingState") // 做饭状态
-		{
-			state = new DoTheCookingState();
-		}
-		else if (name == "EatState") // 吃饭状态
-		{
-			state = new EatState();
-		}
-		else if (name == "SleepState") // 睡觉状态
-		{
-			state = new SleepState();
-		}
-		else if (name == "WorkState") // 工作状态
+
+		if (name == "WorkState") // 工作状态
 		{
 			state = new WorkState();
 		}
@@ -44,7 +21,10 @@ public:
 		{
 			state = new LoafOnAJob();
 		}
-
+		else if (name == "SleepState") // 睡觉状态
+		{
+			state = new SleepState();
+		}
 		context->createState(state, name, parent_name);
 		return state;
 	}

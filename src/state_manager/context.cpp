@@ -82,7 +82,7 @@ namespace HSMState
 	void Context::recursiveSend(NodeState &node_state, EventData &event_data)
 	{
 		EventDeal event_deal = node_state.state_->runEventFunc(event_data);
-		if (event_deal == keep_on && !node_state.father_name_.empty())
+		if (event_deal == EventDeal::CONTINUE && !node_state.father_name_.empty())
 		{
 			std::unordered_map<std::string, NodeState>::iterator iter_map = states_.find(node_state.father_name_);
 			if (iter_map != states_.end())
