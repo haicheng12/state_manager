@@ -5,8 +5,8 @@ namespace HSMState // HSM状态机
 {
 	enum EventDeal // 事件处理
 	{
-		END = 0, // 事件结束处理
-		CONTINUE // 事件继续传递
+		FINISH = 0, // 事件结束处理
+		CONTINUE	// 事件继续传递
 	};
 
 	// 事件数据

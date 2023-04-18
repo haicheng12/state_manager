@@ -70,25 +70,10 @@ Logger *Logger::getInstance()
 void Logger::log(Level level, const char *fileName, int line, const char *format, ...)
 {
    // 过滤低级别日志
-   if (levels > level)
-   {
-      return;
-   }
    if (m_fout.fail())
    {
       throw std::logic_error("open file failed " + m_fileName);
    }
-   // // 获取当前时间戳
-   // auto timeTicks = time(nullptr);
-   // // 将当前时间戳转化为时间结构体
-   // auto ptns = localtime(&timeTicks);
-   // // 存储格式化后的时间
-   // char timeArray[32];
-   // // 初始化字符数组
-   // memset(timeArray, 0, sizeof(timeArray));
-   // // 格式化时间结构体
-   // strftime(timeArray, sizeof(timeArray), "[%Y-%m-%d %H:%M:%S]", ptns);
-
    auto now = std::chrono::system_clock::now();
    // 通过不同精度获取相差的毫秒数
    uint64_t dis_millseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count() - std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count() * 1000;
@@ -108,7 +93,8 @@ void Logger::log(Level level, const char *fileName, int line, const char *format
       char *buffer = new char[size + 1];
       memset(buffer, 0, size + 1);
       snprintf(buffer, size + 1, fmt, timeArray, m_Level[level], fileName, line);
-      std::cout << buffer << std::endl;
+      std::cout << buffer;
+      // << std::endl;
       // 将字符串写入日志中
       m_fout << buffer;
       m_len += size;
@@ -147,17 +133,6 @@ void Logger::log(Level level, const char *fileName, int line, const char *format
 void Logger::rotate()
 {
    close();
-   // 获取当前时间戳
-   // auto timeTicks = time(nullptr);
-   // // 将当前时间戳转化为时间结构体
-   // auto ptns = localtime(&timeTicks);
-   // // 存储格式化后的时间
-   // char timeArray[32];
-   // // 初始化字符数组
-   // memset(timeArray, 0, sizeof(timeArray));
-   // // 格式化时间结构体
-   // strftime(timeArray, sizeof(timeArray), ".%Y-%m-%d_%H-%M-%S", ptns);
-
    auto now = std::chrono::system_clock::now();
    // 通过不同精度获取相差的毫秒数
    uint64_t dis_millseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count() - std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count() * 1000;
