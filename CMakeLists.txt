@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(state_manager)
+project(navigation_frame)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -218,12 +218,12 @@ include_directories("/usr/include/eigen3")
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(state_manager src/main.cpp 
-                                                                   src/state_manager/context.cpp
-		                                                               src/state_manager/state.cpp
-                                                                   src/logger/logger.cpp)
-target_link_libraries(state_manager ${catkin_LIBRARIES})
-add_dependencies(state_manager state_manager_gencpp)
+#add_executable(state_manager src/main.cpp 
+#                                                                   src/state_manager/context.cpp
+#		                                                               src/state_manager/state.cpp
+#                                                                   src/logger/logger.cpp)
+#target_link_libraries(state_manager ${catkin_LIBRARIES})
+#add_dependencies(state_manager state_manager_gencpp)
 
 #install(DIRECTORY include/${PROJECT_NAME}/
 #  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
