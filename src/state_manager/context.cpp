@@ -92,7 +92,7 @@ namespace HSMState
 		}
 	}
 
-	void Context::transForState(std::string name)
+	void Context::transForState(std::string name) // 状态切换
 	{
 		std::string str_name = std::string(name);
 		std::unordered_map<std::string, NodeState>::iterator iter_map = states_.find(str_name);

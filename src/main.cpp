@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 {
 	// std::cout<<"hello Sakura"<<std::endl;
 	Logger::getInstance()->open("/home/ubuntu/log/state_manager.log");
-	Logger::getInstance()->setMax(10240000); // log最大存储空间 10M
+	Logger::getInstance()->setMax(5120000); // log最大存储空间 5M
 	// Logger::getInstance()->setLevel(Logger::INFO);
 	// Logger::getInstance()->log(Logger::DEBUG,__FILE__,__LINE__,"hello Sakura");
 	// Logger::getInstance()->log(Logger::DEBUG,__FILE__,__LINE__,"name is %s,age is %d","旋涡鸣人",18);

@@ -93,8 +93,7 @@ void Logger::log(Level level, const char *fileName, int line, const char *format
       char *buffer = new char[size + 1];
       memset(buffer, 0, size + 1);
       snprintf(buffer, size + 1, fmt, timeArray, m_Level[level], fileName, line);
-      std::cout << buffer;
-      // << std::endl;
+      std::cout << buffer << std::endl;
       // 将字符串写入日志中
       m_fout << buffer;
       m_len += size;
